@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  padding: var(--spacing-200);
+  border-radius: var(--radius-12);
+  gap: calc(var(--spacing-050) + 1);
+  color: var(--card-foreground);
+}
+
+.card > .text-preset-3,
+.card > .text-preset-1 {
+  color: var(--card-foreground);
+  z-index: 1;
+}
+
+.card-image {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  right: -9%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 848px) {
+  .card-image {
+    right: -12%;
+  }
+}
+
+@media (max-width: 624px) {
+  .card {
+    height: 130px;
+  }
+
+  .card-image {
+    right: -9%;
+  }
+}

@@ -151,59 +151,9 @@ button {
   max-width: 990px;
 }
 
-.stats-section {
-  height: 150px;
-}
-
-.card {
-  position: relative;
-  overflow: hidden;
+.stats__section {
   height: 150px;
   width: 100%;
-  align-items: left;
-  justify-content: center;
-  padding: var(--spacing-200);
-  border-radius: var(--radius-12);
-  gap: calc(var(--spacing-050) + 1);
-  color: var(--card-foreground);
-}
-
-.card > .text-preset-3,
-.card > .text-preset-1 {
-  color: var(--card-foreground);
-  z-index: 1;
-}
-
-.card-image {
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  right: -9%;
-  background-repeat: no-repeat;
-}
-
-.total-characters-card {
-  background-color: var(--color-purple-400);
-}
-
-.total-characters-card .card-image {
-  background-image: url('../public/images/pattern-character-count.svg');
-}
-
-.word-count-card {
-  background-color: var(--color-yellow-500);
-}
-
-.word-count-card .card-image {
-  background-image: url('../public/images/pattern-word-count.svg');
-}
-
-.sentence-count-card {
-  background: var(--color-orange-500);
-}
-
-.sentence-count-card .card-image {
-  background-image: url('../public/images/pattern-sentence-count.svg');
 }
 
 .letter-density-section {
@@ -330,10 +280,6 @@ button {
     line-height: var(--leading-1-mobile);
     letter-spacing: var(--tracking-1-mobile);
   }
-
-  .card-image {
-    right: -12%;
-  }
 }
 
 @media (max-width: 624px) {
@@ -346,13 +292,5 @@ button {
     height: fit-content;
     display: flex;
     flex-direction: column;
-  }
-
-  .card {
-    height: 130px;
-  }
-
-  .card-image {
-    right: -9%;
   }
 }

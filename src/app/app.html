@@ -5,21 +5,24 @@
   </div>
   <app-editor />
   <section class="stats__section h-flex gap-16">
-    <div class="total-characters-card card v-flex">
-      <p id="character-count-display" class="text-preset-1">0</p>
-      <p class="text-preset-3">Total Characters</p>
-      <div class="card-image"></div>
-    </div>
-    <div class="word-count-card card v-flex">
-      <p id="word-count-display" class="text-preset-1">0</p>
-      <p class="text-preset-3">Word Count</p>
-      <div class="card-image"></div>
-    </div>
-    <div class="sentence-count-card card v-flex">
-      <p id="sentence-count-display" class="text-preset-1">0</p>
-      <p class="text-preset-3">Sentence count</p>
-      <div class="card-image"></div>
-    </div>
+    <app-stat-card
+      [displayValue]="'0'"
+      [title]="'Total Characters'"
+      [cardImageUrl]="'./images/pattern-character-count.svg'"
+      [backgroundColor]="'var(--color-purple-400)'"
+    />
+    <app-stat-card
+      [displayValue]="'0'"
+      [title]="'Word Count'"
+      [cardImageUrl]="'./images/pattern-word-count.svg'"
+      [backgroundColor]="'var(--color-yellow-500)'"
+    />
+    <app-stat-card
+      [displayValue]="'0'"
+      [title]="'Sentence count'"
+      [cardImageUrl]="'./images/pattern-sentence-count.svg'"
+      [backgroundColor]="'var(--color-orange-500)'"
+    />
   </section>
   <section class="letter-density-section v-flex">
     <h2 class="text-preset-2">Letter Density</h2>
