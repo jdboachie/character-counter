@@ -3,52 +3,7 @@
   <div class="container">
     <h1 class="text-preset-1 hero__text">Analyze your text in real-time.</h1>
   </div>
-  <section class="inputarea v-flex gap-16">
-    <div class="v-flex">
-      <textarea
-        id="textarea"
-        placeholder="Start typing here... (or paste your text)"
-        spellcheck="false"
-        class="text-preset-3"
-      ></textarea>
-      <span id="textarea-error-label" class="textarea__error__label text-preset-4"></span>
-    </div>
-    <div class="options__container">
-      <form class="toggles__container h-flex text-preset-4">
-        <label class="toggles__item" for="whitespace-toggle">
-          <input
-            id="whitespace-toggle"
-            class="toggles__input"
-            name="whitespace-toggle"
-            type="checkbox"
-          />
-          <span tabindex="2" class="toggles__checkbox"></span>
-          Exclude Spaces
-        </label>
-        <label class="toggles__item" for="character-limit-toggle">
-          <input
-            id="character-limit-toggle"
-            class="toggles__input"
-            name="character-limit-toggle"
-            type="checkbox"
-          />
-          <span tabindex="3" class="toggles__checkbox"></span>
-          Set Character Limit
-        </label>
-        <input
-          aria-label="Character limit value"
-          id="character-limit-input"
-          class="character__limit__input text-preset-4"
-          type="number"
-          min="1"
-        />
-      </form>
-      <p class="text-preset-4">
-        Approx. reading time:
-        <span id="read-time-display">0 minutes</span>
-      </p>
-    </div>
-  </section>
+  <app-editor />
   <section class="stats__section h-flex gap-16">
     <div class="total-characters-card card v-flex">
       <p id="character-count-display" class="text-preset-1">0</p>
