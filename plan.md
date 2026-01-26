@@ -1,0 +1,3 @@
+- create counter model
+- expose public facing fields (as observables) and public facing functions
+- wire up ui to react to changes (bind to observables)

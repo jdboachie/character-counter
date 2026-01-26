@@ -1,0 +1,7 @@
+<li class="text-preset-4">
+  <p class="label">{{ density().letter }}</p>
+  <div [style.--progress-width.%]="density().percent" class="progressbar">
+    <div class="progressbar__indicator"></div>
+  </div>
+  <p class="progressbar__detail">{{ density().count }} ({{ density().percent.toFixed(2) }}%)</p>
+</li>
