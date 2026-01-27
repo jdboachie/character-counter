@@ -6,28 +6,44 @@
   <app-editor />
   <section class="stats__section h-flex gap-16">
     <app-stat-card
-      [displayValue]="'0'"
+      [displayValue]="characterCount()"
       [title]="'Total Characters'"
       [cardImageUrl]="'./images/pattern-character-count.svg'"
       [backgroundColor]="'var(--color-purple-400)'"
     />
     <app-stat-card
-      [displayValue]="'0'"
+      [displayValue]="wordCount()"
       [title]="'Word Count'"
       [cardImageUrl]="'./images/pattern-word-count.svg'"
       [backgroundColor]="'var(--color-yellow-500)'"
     />
     <app-stat-card
-      [displayValue]="'0'"
-      [title]="'Sentence count'"
+      [displayValue]="sentenceCount()"
+      [title]="'Sentence Count'"
       [cardImageUrl]="'./images/pattern-sentence-count.svg'"
       [backgroundColor]="'var(--color-orange-500)'"
     />
   </section>
   <section class="letter-density-section v-flex">
     <h2 class="text-preset-2">Letter Density</h2>
-    <div id="letter-density-view">
-      <p>No characters found. Start typing to see letter density.</p>
+    <div class="letter-density-view">
+      @if (letterDensities().length === 0) {
+      <p class="text-preset-4">No characters found. Start typing to see letter density.</p>
+      } @else {
+      <div class="density__container">
+        <ul class="density__list v-flex">
+          @for (density of displayedDensities; track density.letter) {
+          <app-letter-density-stat [density]="density" />
+          }
+        </ul>
+        @if (hasMoreDensities) {
+        <button class="seemore__button text-preset-3" type="button" (click)="toggleShowMore()">
+          See {{ showAllDensities() ? 'less' : 'more' }}
+          <span class="seemore__button__icon" [attr.data-open]="showAllDensities()"></span>
+        </button>
+        }
+      </div>
+      }
     </div>
   </section>
 </div>

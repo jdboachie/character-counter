@@ -4,9 +4,21 @@
       id="textarea"
       placeholder="Start typing here... (or paste your text)"
       spellcheck="false"
-      class="text-preset-3"
+      class="text-preset-4"
+      [class.error]="isOverLimit()"
+      [value]="text()"
+      (input)="onTextInput($event)"
+      (keydown)="onKeydown($event)"
+      aria-describedby="textarea-error-label"
     ></textarea>
-    <span id="textarea-error-label" class="textarea__error__label text-preset-4"></span>
+    <span
+      id="textarea-error-label"
+      class="textarea__error__label text-preset-4"
+      role="alert"
+      aria-live="polite"
+    >
+      @if (isOverLimit()) { Limit reached! Your text exceeds {{ characterLimit() }} characters. }
+    </span>
   </div>
   <div class="options__container">
     <form class="toggles__container h-flex text-preset-4">
@@ -16,6 +28,8 @@
           class="toggles__input"
           name="whitespace-toggle"
           type="checkbox"
+          [checked]="excludeWhitespace()"
+          (change)="onExcludeWhitespaceChange($event)"
         />
         <span class="toggles__checkbox"></span>
         Exclude Spaces
@@ -26,6 +40,8 @@
           class="toggles__input"
           name="character-limit-toggle"
           type="checkbox"
+          [checked]="useCharacterLimit()"
+          (change)="onCharacterLimitToggleChange($event)"
         />
         <span class="toggles__checkbox"></span>
         Set Character Limit
@@ -36,11 +52,14 @@
         class="character__limit__input text-preset-4"
         type="number"
         min="1"
+        [style.visibility]="useCharacterLimit() ? 'visible' : 'hidden'"
+        [value]="characterLimit()"
+        (input)="onCharacterLimitInput($event)"
       />
     </form>
     <p class="text-preset-4">
       Approx. reading time:
-      <span id="read-time-display">0 minutes</span>
+      <span id="read-time-display">{{ readTime() }}</span>
     </p>
   </div>
 </section>
