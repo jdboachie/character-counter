@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface CharacterStats {
   characterCount: number;
