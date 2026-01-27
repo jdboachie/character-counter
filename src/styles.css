@@ -225,6 +225,12 @@ button {
   transform: rotate(0deg);
 }
 
+.seemore__button:focus-visible {
+  outline: 2px solid var(--color-purple-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-4);
+}
+
 .text-preset-1 {
   font-weight: bold;
   font-size: var(--font-size-1);
