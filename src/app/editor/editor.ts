@@ -2,8 +2,12 @@ import {
   Component,
   inject,
   signal,
+  output,
   OnInit,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  input,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -16,19 +20,28 @@ import { CounterState } from '../counter-state';
   styleUrl: './editor.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Editor implements OnInit, OnDestroy {
+export class Editor implements OnInit, OnDestroy, OnChanges {
   private readonly counterState = inject(CounterState);
   private readonly subscriptions: Subscription[] = [];
   private debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
+  readonly initialCharacterLimit = input<number>(300);
+
+  readonly textChanged = output<string>();
+  readonly excludeWhitespaceChanged = output<boolean>();
+  readonly characterLimitToggled = output<boolean>();
+  readonly characterLimitChanged = output<number>();
+
   protected readonly text = signal('');
   protected readonly excludeWhitespace = signal(false);
   protected readonly useCharacterLimit = signal(false);
-  protected readonly characterLimit = signal(this.counterState.getDefaultCharacterLimit());
+  protected readonly characterLimit = signal(300);
   protected readonly isOverLimit = signal(false);
   protected readonly readTime = signal('0 minutes');
 
   ngOnInit(): void {
+    this.characterLimit.set(this.initialCharacterLimit());
+
     this.subscriptions.push(
       this.counterState.characterLimitState$.subscribe((state) => {
         this.isOverLimit.set(state.isOverLimit);
@@ -42,6 +55,13 @@ export class Editor implements OnInit, OnDestroy {
     );
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialCharacterLimit'] && !changes['initialCharacterLimit'].firstChange) {
+      const newLimit = changes['initialCharacterLimit'].currentValue;
+      this.characterLimit.set(newLimit);
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     if (this.debounceTimeout) {
@@ -51,14 +71,16 @@ export class Editor implements OnInit, OnDestroy {
 
   protected onTextInput(event: Event): void {
     const target = event.target as HTMLTextAreaElement;
-    this.text.set(target.value);
+    const newText = target.value;
+    this.text.set(newText);
 
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }
 
     this.debounceTimeout = setTimeout(() => {
-      this.counterState.updateStats(this.text());
+      // Emit to parent - parent handles service updates
+      this.textChanged.emit(newText);
     }, 100);
   }
 
@@ -83,23 +105,29 @@ export class Editor implements OnInit, OnDestroy {
 
   protected onExcludeWhitespaceChange(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.excludeWhitespace.set(target.checked);
-    this.counterState.setExcludeWhitespace(target.checked);
-    this.counterState.updateStats(this.text());
+    const isChecked = target.checked;
+    this.excludeWhitespace.set(isChecked);
+
+    // Emit to parent - parent handles service updates
+    this.excludeWhitespaceChanged.emit(isChecked);
   }
 
   protected onCharacterLimitToggleChange(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.useCharacterLimit.set(target.checked);
-    this.counterState.setUseCharacterLimit(target.checked);
-    this.counterState.updateStats(this.text());
+    const isChecked = target.checked;
+    this.useCharacterLimit.set(isChecked);
+
+    // Emit to parent - parent handles service updates
+    this.characterLimitToggled.emit(isChecked);
   }
 
   protected onCharacterLimitInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     const limit = parseInt(target.value, 10) || 0;
     this.characterLimit.set(limit);
-    this.counterState.setCharacterLimit(limit);
+
+    // Emit to parent - parent handles service updates
+    this.characterLimitChanged.emit(limit);
   }
 
   private formatReadTime(readTime: number): string {

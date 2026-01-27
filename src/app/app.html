@@ -1,9 +1,15 @@
 <div class="container v-flex gap-48">
-  <app-header />
+  <app-header (themeToggled)="onThemeToggled($event)" />
   <div class="container">
     <h1 class="text-preset-1 hero__text">Analyze your text in real-time.</h1>
   </div>
-  <app-editor />
+  <app-editor
+    [initialCharacterLimit]="characterLimit()"
+    (textChanged)="onTextChanged($event)"
+    (excludeWhitespaceChanged)="onExcludeWhitespaceChanged($event)"
+    (characterLimitToggled)="onCharacterLimitToggled($event)"
+    (characterLimitChanged)="onCharacterLimitChanged($event)"
+  />
   <section class="stats__section h-flex gap-16">
     <app-stat-card
       [displayValue]="characterCount()"
@@ -32,11 +38,11 @@
       } @else {
       <div class="density__container">
         <ul class="density__list v-flex">
-          @for (density of displayedDensities; track density.letter) {
+          @for (density of displayedDensities(); track density.letter) {
           <app-letter-density-stat [density]="density" />
           }
         </ul>
-        @if (hasMoreDensities) {
+        @if (hasMoreDensities()) {
         <button class="seemore__button text-preset-3" type="button" (click)="toggleShowMore()">
           See {{ showAllDensities() ? 'less' : 'more' }}
           <span class="seemore__button__icon" [attr.data-open]="showAllDensities()"></span>

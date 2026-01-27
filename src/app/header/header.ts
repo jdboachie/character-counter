@@ -1,5 +1,5 @@
-import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
-import { ThemeService } from '../theme';
+import { Component, inject, ChangeDetectionStrategy, computed, output } from '@angular/core';
+import { ThemeService, Theme } from '../theme';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +10,8 @@ import { ThemeService } from '../theme';
 })
 export class Header {
   private readonly themeService = inject(ThemeService);
+
+  readonly themeToggled = output<Theme>();
 
   protected readonly logoSrc = computed(() =>
     this.themeService.isDark() ? './images/logo-dark-theme.svg' : './images/logo-light-theme.svg',
@@ -24,6 +26,7 @@ export class Header {
   );
 
   protected toggleTheme(): void {
-    this.themeService.toggleTheme();
+    const newTheme: Theme = this.themeService.isDark() ? 'light' : 'dark';
+    this.themeToggled.emit(newTheme);
   }
 }
