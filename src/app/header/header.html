@@ -1,11 +1,12 @@
 <header class="h-flex">
-  <img
-    id="app-logo"
-    src="./images/logo-light-theme.svg"
-    alt="Character Counter Logo"
-    class="logo"
-  />
-  <button id="settings-button" class="settings__button">
-    <img id="settings-button-icon" src="./images/icon-moon.svg" alt="theme toggle" />
+  <img id="app-logo" [src]="logoSrc()" alt="Character Counter Logo" class="logo" />
+  <button
+    id="settings-button"
+    class="settings__button"
+    type="button"
+    (click)="toggleTheme()"
+    [attr.aria-label]="themeButtonLabel()"
+  >
+    <img id="settings-button-icon" [src]="themeIconSrc()" [alt]="themeButtonLabel()" />
   </button>
 </header>

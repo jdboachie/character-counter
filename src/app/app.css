@@ -1,0 +1,4 @@
+:host {
+    background-image: var(--background-image-url);
+    color: var(--foreground);
+}

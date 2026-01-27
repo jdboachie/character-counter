@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
+import { ThemeService } from '../theme';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,22 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {}
+export class Header {
+  private readonly themeService = inject(ThemeService);
+
+  protected readonly logoSrc = computed(() =>
+    this.themeService.isDark() ? './images/logo-dark-theme.svg' : './images/logo-light-theme.svg',
+  );
+
+  protected readonly themeIconSrc = computed(() =>
+    this.themeService.isDark() ? './images/icon-sun.svg' : './images/icon-moon.svg',
+  );
+
+  protected readonly themeButtonLabel = computed(() =>
+    this.themeService.isDark() ? 'Switch to light theme' : 'Switch to dark theme',
+  );
+
+  protected toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
+}
