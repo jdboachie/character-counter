@@ -7,6 +7,7 @@ textarea {
   max-height: 24rem;
   field-sizing: content;
   background-color: var(--textarea-background);
+  color: var(--foreground);
   border: 1px solid var(--border);
   border-radius: var(--radius-12);
   transition: 0.1s ease-out;
