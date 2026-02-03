@@ -7,7 +7,6 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Editor } from './editor/editor';
 import { Header } from './header/header';
@@ -18,7 +17,7 @@ import { ThemeService, Theme } from './theme';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Editor, StatCard, LetterDensityStat],
+  imports: [Header, Editor, StatCard, LetterDensityStat],
   templateUrl: './app.html',
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
